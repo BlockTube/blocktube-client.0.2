@@ -1,0 +1,213 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<script src="../../bower_components/VideoSub/videosub.js"></script>
+
+<dom-module id="stube-player">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      video {
+        width: 100%;
+        max-height: 400px;
+        }
+
+        .wide {
+          width: 100%; 
+        }
+
+        .soundslider {
+          width: 100px;
+        }
+
+        .controls {
+          margin-top: -40px;
+          background-color: red;
+        }
+
+    </style>
+    <div class="vertical layout">
+    <video id="vp" on-tap="togglePlay">
+      <source src="{{videourl}}" />
+      <track src="/images/scrubs.srt" kind="subtitle" srclang="en-US" label="English" />
+    </video>
+      <div class="controls">
+        <paper-slider expand secondary-progress="{{progresspercentage}}" immediate-value="{{scrubtime}}" min="0" max="100" class="wide"></paper-slider>
+        <div class="horizontal layout">
+          <paper-icon-button 
+            id="playpause" 
+            icon="{{playicon}}" 
+            on-tap="togglePlay"
+            disabled>
+           </paper-icon-button>
+          <paper-icon-button icon="av:skip-next"></paper-icon-button>
+          <paper-icon-button on-tap="toggleMute" icon="{{volumeicon}}"></paper-icon-button>
+          <paper-slider min="10" max="200" value="{{volume}}" immediate-value="{{volume}}" class="soundslider"></paper-slider>
+          <div>time / time</div>
+          <div class="flex"></div>
+          <paper-icon-button icon="av:closed-caption" disabled></paper-icon-button>
+          <paper-icon-button icon="settings" disabled></paper-icon-button>
+          <paper-icon-button icon="fullscreen"></paper-icon-button>
+        </div>
+
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    
+    var vp;
+
+    Polymer({
+      is: 'stube-player',
+
+      properties: {
+        init: {
+          type: Boolean,
+          value: false
+        },
+        videohash: {
+          type: String,
+          //value: 'QmR8NyktETUYryjL3ZecAGJtSYPup9CJqihxyJVXcHuLBu',
+          //notify: true,
+          observer: '_hash'
+        },
+        videourl: {
+          type: String,
+          notify: true
+        },
+        playing: {
+          type: Boolean,
+          observer: '_playing',
+          value: false
+        },
+        playicon: {
+          type: String,
+          value: 'av:play-arrow'
+        },
+        volume: {
+          type: Number,
+          value: 40,
+          observer: '_volume'
+        },
+        scrubtime: {
+          type: Number,
+          observer: '_scrubtime',
+          value: 0
+        },
+        progresspercentage: {
+          type: Number,
+          value: 0
+        }
+
+      },
+
+      attached: function() {
+//        console.log('stube hash=',this.videohash);
+          vp = this.$.vp;
+          this.init = true;
+          this.mute = false;
+      },
+
+      enableplay: function(){
+        this.$.playpause.disabled = false;
+        vp.volume = this.volume / 200;
+      },
+
+      togglePlay: function(){
+        if(this.playing){
+          this.playing = false;
+          this.playicon = 'av:play-arrow';
+          vp.pause();
+        } else {
+          this.playing = true;
+          this.playicon = 'av:pause';
+          vp.play();
+        }
+      },
+
+      _playing: function(){
+        
+      },
+
+      _scrubtime: function(){
+        if(this.init){
+          var newtime = vp.duration * this.scrubtime;
+          console.log(newtime/100);
+          vp.currentTime = newtime/100;
+        }
+        //vp.currentTime = newtime;
+      },
+
+      _progress: function(){
+        var perplayed = vp.currentTime / vp.duration;
+        //console.log(vp.currentTime, ' / ', vp.duration, ' ', perplayed * 100, '%');
+        this.progresspercentage = perplayed * 100;
+
+      },
+
+      _volume: function(){
+        console.log(this.volume);
+        if(this.init){
+          vp.volume = this.volume/200;
+          this.prevvolume = this.volume;
+          console.log(vp.volume);
+          
+          this.volumeicon = 'av:volume-down';
+        
+        }
+      },
+
+      toggleMute: function(){
+        if(this.mute){
+          this.prevvolume = this.volume;
+          this.volume = 0;
+          this.mute = false;
+          this.volumeicon = 'av:volume-off';
+        } else {
+          this.volume = this.prevvolume;
+          this.mute = true;
+        }
+      },
+
+      _hash: function(){
+        console.log('stube-player got hash' , this.videohash);
+        this.videourl = 'http://gateway.ipfs.io/ipfs/' + this.videohash;
+        // var elem = document.createElement("video");
+        // var place = document.querySelector("#vidplace");
+
+        // elem.src = this.videourl;
+        // elem.controls = false;
+        // elem.id = "vp";
+        // elem.crossOrigin = "Anonymous";
+
+        // place.appendChild(elem);
+        // vp = elem;
+        
+        vp.addEventListener('canplay', this.enableplay.bind(this));
+
+        vp.addEventListener('progress', this._progress.bind(this));
+        console.log('stube-playser setting URL for video player to ',this.videourl);
+
+        
+
+
+      }
+    });
+  })();
+  </script>
+</dom-module>

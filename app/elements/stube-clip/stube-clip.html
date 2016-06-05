@@ -1,0 +1,135 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../stube-likebtn/stube-likebtn.html">
+
+
+<dom-module id="stube-clip">
+  <template>
+    <style is="custom-style" include="shared-styles"></style>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+
+    </style>
+    <iron-ajax
+      id="ajax"
+       handle-as="json"
+       on-response="handleResponse"></iron-ajax>
+    <stube-player hash=""></stube-player>
+    <paper-material elevation="1">
+      <div class="horizontal layout">
+      <div class="paper-font-headline flex">{{title}}</div>
+      <paper-icon-button toggles icon="favorite" active="{{likebutton}}"></paper-icon-button>
+      <stube-likebtn address="{{address}}" clipaddr="{{ipfsobject}}"></stube-likebtn>
+      <p class="paper-font-body2 gris">{{likes}}</p>
+    </div>
+      <div class="paper-font-body2 gris"><span>{{username}}</span> - <span>{{views}}</span> views</div>
+
+      <div class="paper-font-body1">{{ipfsobject}}</div>
+      <div class="paper-font-body1">{{descr}}</div>
+      <div></div>
+    </paper-material>
+
+    <paper-material elevation="1">
+    <div class="paper-font-body2 gris">1222 comments</div>
+    <comment-input></comment-input>
+    </paper-material>
+
+    <paper-material elevation="1">
+      <!-- <template is="dom-repeat"> -->
+      <comment-item></comment-item>
+      <comment-item></comment-item>
+      <comment-item>
+        <comment-item>
+          <comment-item></comment-item>
+        </comment-item>
+      </comment-item>
+    <!-- </template> -->
+    </paper-material>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'stube-clip',
+
+      properties: {
+        ipfsobject: {
+          type: String,
+          value: '',
+          observer: '_ipfsobject'
+        },
+        title: {
+          type: String,
+          value: 'Loading',
+          notify: true
+        },
+        descr: {
+          type: String,
+          value: 'Loading',
+          notify: true
+        },
+        username: {
+          type: String,
+          value: 'Loading',
+          notify: true
+        },
+        views: {
+          type: Number,
+          value: 0
+        },
+        likes: {
+          type: Number,
+          value: 0
+        },
+        likebutton: {
+          type: Boolean,
+          observer: '_likebutton',
+          value: false
+        }
+
+      },
+
+      _ipfsobject: function(){
+        console.log(this.ipfsobject);
+ 
+        this.$.ajax.url = '//localhost:8080/ipfs/'+this.ipfsobject;
+
+        this.$.ajax.generateRequest();
+      },
+
+      _likebutton: function(){
+        console.log('Like? ', this.likebutton);
+      },
+
+      handleResponse: function(){
+        if(this.$.ajax.lastResponse){
+          console.log('Response: ', this.$.ajax.lastResponse);
+          var ipfs = this.$.ajax.lastResponse;
+          this.title = ipfs.name;
+          this.descr = ipfs.description;
+          this.duration = ipfs.duration;
+          this.videosrc = ipfs.video;
+          this.thumb = ipfs.thumb;
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,294 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../stube-likebtn/stube-likebtn.html">
+
+<dom-module id="stube-item">
+  <template>
+    <style is="custom-style" include="shared-styles"></style>
+
+    <style>
+      :host {
+        display: block;
+      }
+      img {
+        width: 40%;
+        height: 40%;
+        margin-right: 20px;
+        max-height: 125px;
+      }
+      
+      h1, h2, h3, h4, p {
+        @apply(--bt-font);
+      }
+
+      #entry {
+        margin: 0px;
+        padding: 10px;
+      }
+      .container {
+      @apply(--layout-vertical);
+    }
+    .flexchild {
+      @apply(--layout-flex);
+    }
+    .gris {
+      color: --google-grey-100;
+    }
+    .actionbuttons {
+      @apply(--layout-horizontal);
+    }
+    </style>
+
+    <iron-localstorage id="lscache" name="itemcache"
+    value="{{itemcache}}"
+    on-iron-localstorage-load="itemcacheloaded"
+    on-iron-localstorage-load-empty="itemcacheloadedempty"
+  ></iron-localstorage>
+
+    <template is="dom-if" if="{{listitem}}">
+      <div class="horizontal layout" on-tap="firelisttap">
+      <img src="{{thumbnail}}" />
+      <div class="vertical layout flex" >
+        <h3>{{title}}</h3>
+        <h4>{{description}}</h4>
+      </div>
+    </template>
+   
+    <!-- BAN jonge.... hier gade gij plezier aan beleven zenne -->
+
+    <template is="dom-if" if="{{!listitem}}">
+
+      <div class="container vertical layout">
+
+      <stube-player videohash="{{videohash}}"></stube-player>
+
+      <div id="entry">
+        <template is="dom-if" if="{{!title}}">
+          <h3>Loading</h3>
+        </template>
+        <template is="dom-if" if="{{title}}">
+
+          <h3>{{title}}</h3>
+          <h4>{{description}}</h4>
+          <h4>tags: {{tags}}</h4>
+
+          <div>
+            <span>{{duration}} s</span>
+            -
+            <span>{{views}}</span>
+            views
+    -
+            <span>{{comments}}</span>
+            comments
+          </div>
+          <div class="actionbuttons">
+            <paper-icon-button toggles icon="favorite" active="{{likebutton}}"></paper-icon-button>
+            <stube-likebtn account="{{account}}" web3="{{web3}}"></stube-likebtn>
+            <p class="paper-font-body2 gris">{{likes}}</p>
+          </div>
+
+        </template>
+      </div>
+    </template>
+
+    <div class="paper-font-body1">{{ipfsobject}}</div>
+    <div class="paper-font-body1">{{descr}}</div>
+    <div></div>
+  </div>
+</template>
+
+<script>
+    (function() {
+      'use strict';
+      
+      Polymer({
+        is: 'stube-item',
+
+        listeners: {
+        //'tap': 'hitMe',
+      },
+
+        properties: {
+          itemcache: {
+            type: Object,
+            //observer: 'itemcacheloaded'            
+          },
+          web3: {
+            type: Object,
+            observer: '_web3'
+          },
+          contract: {
+            type: String,
+            observer: '_contract'
+          },
+          title: {
+            type: String,
+            //value: 'Loading ipfs',
+            notify: true
+          },
+          description: {
+            type: String,
+            //value: 'Loading ipfs',
+            notify: true
+          },
+          views: {
+            type: Number,
+            value: 1000
+          },
+          comments: {
+            type: Number,
+            value: 2
+          },
+          thumb: {
+            type: String,
+            value: ''
+          },
+          duration: {
+            type: Number,
+            value: 0
+          },
+          hash: {
+            type: String,
+            //observer: '_hash'
+          },
+          videohash: {
+            type: String,
+            notify:true
+
+          },
+          listitem: {
+            type: Boolean,
+            value: false
+          },
+          likebutton: {
+          type: Boolean,
+          observer: '_likebutton',
+          value: false
+        },
+        contractabi: {
+          type: Object,
+          value: [{'constant':true,'inputs':[],'name':'treshold','outputs':[{'name':'','type':'uint256'}],'type':'function'},{'constant':false,'inputs':[],'name':'kill','outputs':[],'type':'function'},{'constant':true,'inputs':[],'name':'percentageforowner','outputs':[{'name':'','type':'uint256'}],'type':'function'},{'constant':true,'inputs':[],'name':'owner','outputs':[{'name':'','type':'address'}],'type':'function'},{'constant':true,'inputs':[],'name':'shareholdersnum','outputs':[{'name':'','type':'uint256'}],'type':'function'},{'constant':true,'inputs':[{'name':'','type':'uint256'}],'name':'shareholders','outputs':[{'name':'addr','type':'address'},{'name':'shares','type':'uint256'}],'type':'function'},{'constant':true,'inputs':[],'name':'tokenaddr','outputs':[{'name':'','type':'address'}],'type':'function'},{'constant':true,'inputs':[],'name':'Token','outputs':[{'name':'','type':'address'}],'type':'function'},{'constant':false,'inputs':[{'name':'_liker','type':'address'},{'name':'_likeamount','type':'uint256'}],'name':'blocktubeTransfer','outputs':[],'type':'function'},{'constant':true,'inputs':[],'name':'remainingCliptokens','outputs':[{'name':'','type':'uint256'}],'type':'function'},{'constant':true,'inputs':[],'name':'ipfsclipobject','outputs':[{'name':'','type':'string'}],'type':'function'},{'inputs':[{'name':'_ipfsclipobject','type':'string'},{'name':'_treshold','type':'uint256'},{'name':'_percentageforowner','type':'uint256'}],'type':'constructor'}]
+        }
+
+        },
+
+        ready: function(){
+          console.log('stube-item READY');
+        },
+
+        hitMe: function(){
+          //this.fire('go', { msg: "/clip/hash1" });
+          //location ="/clip/hash1";
+
+          Excess.RouteManager.transitionTo('/clip/'+this.hash);
+
+//          page('/clip/'+this.hash);
+        },
+
+        _likebutton: function(){
+          //console.log('Like? ', this.likebutton);
+        },
+
+        _contract: function(){
+          console.log('loading clip contract: ', this.contract);
+          this.loadcontract();
+        },
+
+        firelisttap: function(){
+          this.fire('item-tapped', this.contract);
+        },
+
+        _web3: function(){
+          this.loadcontract();
+        },
+
+        itemcacheloaded: function(){
+          //console.log('web3',this.web3===null);
+          //console.log('contract',this.contract===null);
+          this.loadcontract();
+        },
+
+        itemcacheloadedempty: function(){
+          this.itemcache = {};
+          this.loadcontract();
+        },
+
+        loadcontract: function(){
+          if (this.web3 && this.itemcache && this.contract){
+            var myclipContract = this.web3.eth.contract(this.contractabi);
+            var myclipContractInstance = myclipContract.at(this.contract);
+            this.hash = myclipContractInstance.ipfsclipobject().toString();
+            console.log('HASH!',this.hash);
+            this.attached();
+          }
+        },
+
+        populate: function(ipfsData) {
+          var self=this;
+          self.title = ipfsData.name;
+          self.description = ipfsData.description;
+          self.videohash = ipfsData.video;
+          self.thumbnail = ipfsData.thumbnail;
+          self.videourl = '';
+          self.tags = ipfsData.tags;
+        },
+
+        attached: function() {
+
+ this.ipfsapihost = new Polymer.IronMetaQuery({
+          key: 'ipfs_read'
+        }).value;
+
+          this.$.lscache.name = 'itemcache-' + this.hash;
+
+          var ipfsData;
+          if (!this.hash){
+            return console.log('hash not available YET');
+          }
+
+          if (this.itemcache[this.hash]) {
+            //console.log('cache HIT', this.hash);
+            ipfsData = this.itemcache[this.hash];
+            return this.populate(ipfsData);
+          } else {
+
+            //console.log('cache MISS', this.hash);
+
+            var self = this;
+            var ipfs = window.ipfsAPI(this.ipfsapihost, 80);
+
+            var buf = '';
+            //console.log('MIKE:this.hash);
+            ipfs.cat(this.hash, function(err, res) {
+              res
+                .on('error', function(err) {
+                  throw (err);
+                })
+                .on('data', function(data) {
+                  buf += data;
+                })
+                .on('end', function() {
+                  var ipfsData = JSON.parse(buf);
+                  self.populate(ipfsData);
+                  self.set('itemcache.'+self.hash,ipfsData);
+                });
+            });
+          }
+
+
+        },
+      });
+    })();
+  </script>
+
+</dom-module>
