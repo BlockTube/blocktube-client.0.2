@@ -20,31 +20,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.scrollPageToTop();
     });
 
-    page('/user', function () {
-      app.route = 'user';
-      app.scrollPageToTop();
-    });
-
-    page('/hot', function () {
-      app.route = 'hot';
-      app.scrollPageToTop();
-    });
-
-    page('/subs', function () {
-      app.route = 'subs';
-      app.scrollPageToTop();
-    });
-
-    page('/users/:name', function (data) {
-      app.route = 'user-info';
+    page('/clip/:clipcontract', function (data) {
+      app.route = 'clip';
       app.params = data.params;
       app.scrollPageToTop();
     });
 
-    page('/contact', function () {
-      app.route = 'contact';
-      app.scrollPageToTop();
-    });
+    
 
     // add #! before urls
     page({

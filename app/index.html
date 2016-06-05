@@ -96,6 +96,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </iron-meta>
 
     <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
+      <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+      <div data-route="home" class="fit">
 
       <!-- Main Area -->
       <paper-scroll-header-panel main>
@@ -115,7 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-toolbar>
 
         <paper-toolbar id="secondToolbar">
-          <iron-selector selected="{{route}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
+          <iron-selector selected="{{tab}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
             <paper-icon-button icon="home" go="home"></paper-icon-button>
             <paper-icon-button icon="av:fiber-new" go="hot"></paper-icon-button>
             <paper-icon-button icon="av:playlist-play" go="subs"></paper-icon-button>
@@ -126,21 +129,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Main Content -->
         <div class="content">
-          <!-- <iron-pages attr-for-selected="data-route" selected="{{route}}"> -->
-          <neon-animated-pages 
-            selected="{{route}}" 
-            id="mainContainer"
-            attr-for-selected="data-route" 
-            entry-animation="slide-from-right-animation" 
-            exit-animation="slide-left-animation">
 
-              <neon-animatable data-route="home">
+          <neon-animated-pages 
+            selected="{{tab}}" 
+            id="mainContainer"
+            attr-for-selected="tab-route" 
+            entry-animation="slide-from-right-animation" 
+            exit-animation="slide-left-animation"
+            >
+
+              <neon-animatable tab-route="home">
                 <template is="dom-repeat" items="{{clips}}">
                   <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
                 </template>
 
               </neon-animatable>
-              <neon-animatable data-route="hot">
+              <neon-animatable tab-route="hot">
                 <h1>HOME</h1>
                 <p>Content lorem ipsum sit dolor et amet</p>
                 <p>Content lorem ipsum sit dolor et amet</p>
@@ -152,7 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <p>Content lorem ipsum sit dolor et amet</p>
                 
               </neon-animatable>
-              <neon-animatable data-route="subs">
+              <neon-animatable tab-route="subs">
                 <h1>HOME</h1>
                 <p>Content lorem ipsum sit dolor et amet</p>
                 <p>Content lorem ipsum sit dolor et amet</p>
@@ -164,13 +168,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <p>Content lorem ipsum sit dolor et amet</p>
                 
               </neon-animatable>
-              <neon-animatable data-route="user">
+              <neon-animatable tab-route="user">
                  <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload>
               </neon-animatable>
           </neon-animated-pages>
 
+
+
         </div>
       </paper-scroll-header-panel>
+    </div>
+
+      <div data-route="clip" id="cliptab">
+            <stube-item contract="{{params.clipcontract}}" web3="{{web3}}" account="{{account}}"></stube-item>
+          </div>
+
+        </iron-pages>
 
   </template>
 
