@@ -118,7 +118,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-toolbar>
 
         <paper-toolbar id="secondToolbar">
-          <iron-selector selected="{{tab}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
+
+          <iron-selector id="tabselector" selected="{{tab}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
             <paper-icon-button icon="home" go="home"></paper-icon-button>
             <paper-icon-button icon="av:fiber-new" go="hot"></paper-icon-button>
             <paper-icon-button icon="av:playlist-play" go="subs"></paper-icon-button>
@@ -139,9 +140,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             >
 
               <neon-animatable tab-route="home">
+                <div class="horizontal center-center layout wrap">
                 <template is="dom-repeat" items="{{clips}}">
                   <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
                 </template>
+              </div>
 
               </neon-animatable>
               <neon-animatable tab-route="hot">

@@ -59,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   /* General styles */
   body {
-    background-color: var(--bt-blue);
+    background-color: var(--bt-lightblue);
   }
   
 
@@ -121,12 +121,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   #secondToolbar {
-    height: 48px;
+    height: 52px;
     background-color: var(--bt-orange);
+    @apply(--layout-horizontal);
+    @apply(--layout-center-center);
   }
 
   .content {
-    background-color: var(--bt-blue);
+    background-color: var(--bt-lightblue);
+  }
+
+  #tabselector {
+    width: 480px;
   }
 
   iron-selector {
@@ -159,7 +165,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   /* Height of the scroll area */
   .content {
-    height: 900px;
   }
 
   #cliptab {
@@ -213,7 +218,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     iron-pages {
       padding: 48px 62px;
-      background-color: red;
       height: 100%;
     }
 
