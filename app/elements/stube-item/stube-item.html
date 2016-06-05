@@ -56,24 +56,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-iron-localstorage-load-empty="itemcacheloadedempty"
   ></iron-localstorage>
 
-    <template is="dom-if" if="{{listitem}}">
-      <div class="horizontal layout" on-tap="firelisttap">
-      <img src="{{thumbnail}}" />
-      <div class="vertical layout flex" >
-        <h3>{{title}}</h3>
-        <h4>{{description}}</h4>
-      </div>
-    </template>
+    
    
     <!-- BAN jonge.... hier gade gij plezier aan beleven zenne -->
 
-    <template is="dom-if" if="{{!listitem}}">
 
       <div class="container vertical layout">
 
-      <stube-player videohash="{{videohash}}"></stube-player>
+        <stube-player videohash="{{videohash}}" on-close="close"></stube-player>
 
-      <div id="entry">
+        <div id="entry">
         <template is="dom-if" if="{{!title}}">
           <h3>Loading</h3>
         </template>
@@ -100,11 +92,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         </template>
       </div>
-    </template>
 
-    <div class="paper-font-body1">{{ipfsobject}}</div>
-    <div class="paper-font-body1">{{descr}}</div>
-    <div></div>
+  
   </div>
 </template>
 
@@ -185,6 +174,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         ready: function(){
           console.log('stube-item READY');
+        },
+
+        close: function(){
+          this.fire('close');
         },
 
         hitMe: function(){

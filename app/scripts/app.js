@@ -55,4 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/clip/'+e.detail);
   };
 
+  app.close = function(){
+    page('/');
+  };
+
 })(document);

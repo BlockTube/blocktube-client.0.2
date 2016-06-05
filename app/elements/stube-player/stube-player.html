@@ -10,10 +10,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
-<script src="../../bower_components/VideoSub/videosub.js"></script>
-
+<!-- <script src="../../bower_components/VideoSub/videosub.js"></script>
+ -->
 <dom-module id="stube-player">
   <template>
     <style>
@@ -29,48 +30,101 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           width: 100%; 
         }
 
+        #playpause {
+          width: 80px;
+          height: 80px;
+        }
+
         .soundslider {
           width: 100px;
         }
 
         .controls {
-          margin-top: -40px;
-          background-color: red;
+/*          background-color: red;
+*/        }
+
+        .overlay {
+          
+          max-height: 300px;
         }
 
     </style>
-    <div class="vertical layout">
-    <video id="vp" on-tap="togglePlay">
+    <div class="vertical layout" onmouseover="showOverlay()" onmouseout="countdownOverlay()">
+    <video id="vp">
       <source src="{{videourl}}" />
-      <track src="/images/scrubs.srt" kind="subtitle" srclang="en-US" label="English" />
-    </video>
-      <div class="controls">
-        <paper-slider expand secondary-progress="{{progresspercentage}}" immediate-value="{{scrubtime}}" min="0" max="100" class="wide"></paper-slider>
-        <div class="horizontal layout">
-          <paper-icon-button 
-            id="playpause" 
-            icon="{{playicon}}" 
-            on-tap="togglePlay"
-            disabled>
-           </paper-icon-button>
-          <paper-icon-button icon="av:skip-next"></paper-icon-button>
-          <paper-icon-button on-tap="toggleMute" icon="{{volumeicon}}"></paper-icon-button>
-          <paper-slider min="10" max="200" value="{{volume}}" immediate-value="{{volume}}" class="soundslider"></paper-slider>
-          <div>time / time</div>
-          <div class="flex"></div>
-          <paper-icon-button icon="av:closed-caption" disabled></paper-icon-button>
-          <paper-icon-button icon="settings" disabled></paper-icon-button>
-          <paper-icon-button icon="fullscreen"></paper-icon-button>
-        </div>
-
-      </div>
+<!--       <track src="/images/scrubs.srt" kind="subtitle" srclang="en-US" label="English" />
+ -->    </video>
+ <div  id="overlay" >
+    <div class="overlay fit vertical layout">
+      <paper-icon-button 
+        id="exit" 
+        icon="close" 
+        on-tap="close">
+       </paper-icon-button>
+      <div class="flex"></div>
+      <div class="horizontal layout center-center">
+      <paper-icon-button 
+        id="playpause" 
+        icon="{{playicon}}" 
+        on-tap="togglePlay"
+        disabled>
+       </paper-icon-button>
+       <paper-icon-button icon="av:skip-next"></paper-icon-button>
+     </div>
+     <div class="flex"></div>
+       
+    </div>
+  </div>
+    <div class="horizontal layout">
+    <paper-slider expand secondary-progress="{{progresspercentage}}" immediate-value="{{scrubtime}}" min="0" max="100" class="wide"></paper-slider>
+    <paper-icon-button icon="hardware:cast"></paper-icon-button>
+    <paper-icon-button icon="fullscreen"></paper-icon-button>
+  </div>
     </div>
   </template>
   <script>
   (function() {
-    'use strict';
+    // 'use strict';
     
     var vp;
+    var timeout = 3;
+    var resttime = 3;
+    var overlayvisible = true;
+    var interval;
+    var overlay;
+
+    showOverlay = function(){
+      console.log('hit it!', Date.now());
+      overlayvisible = true;
+      resttime = timeout;
+      overlay = document.querySelector('#overlay');
+      overlay.hidden = false;
+    };
+
+    countdownOverlay = function(){
+      if(!interval){
+      interval = setInterval(function(){
+        resttime = resttime - 1;
+        if(resttime <= 0){
+          toggleVisibility();
+        }
+      }, 1000);
+    };
+    };
+
+    toggleVisibility = function(){ 
+      clearInterval(interval);
+      interval = null;
+      if(overlayvisible){
+        overlayvisible = false;
+        overlay.hidden = true;
+      } else {
+        overlayvisible = true;
+        overlay.hidden = false;
+      }
+    };
+
+  
 
     Polymer({
       is: 'stube-player',
@@ -138,6 +192,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.playicon = 'av:pause';
           vp.play();
         }
+      },
+
+      toggleOverlay: function(){
+        console.log('hovering video', Date.now());
+      },
+
+      close: function(){
+        this.fire('close');
       },
 
       _playing: function(){
