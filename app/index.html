@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </iron-meta>
 
     <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
-      <iron-pages attr-for-selected="data-route" selected="{{route}}">
+      <lazy-pages attr-for-selected="data-route" selected="{{route}}">
 
       <div data-route="home" class="fit">
 
@@ -186,7 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <stube-item on-close="close" contract="{{params.clipcontract}}" web3="{{web3}}" account="{{account}}"></stube-item>
           </div>
 
-        </iron-pages>
+        </lazy-pages>
 
   </template>
 

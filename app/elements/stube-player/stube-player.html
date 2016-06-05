@@ -41,7 +41,7 @@
 
     </style>
     <div class="vertical layout" onmouseover="showOverlay()" onmouseout="countdownOverlay()">
-    <video id="vp">
+    <video id="vp" autoplay>
       <source src="{{videourl}}" />
 <!--       <track src="/images/scrubs.srt" kind="subtitle" srclang="en-US" label="English" />
  -->    </video>
@@ -85,7 +85,7 @@
     var overlay;
 
     showOverlay = function(){
-      console.log('hit it!', Date.now());
+      //console.log('hit it!', Date.now());
       overlayvisible = true;
       resttime = timeout;
       overlay = document.querySelector('#overlay');
@@ -239,7 +239,7 @@
 
       _hash: function(){
         console.log('stube-player got hash' , this.videohash);
-        this.videourl = 'http://gateway.ipfs.io/ipfs/' + this.videohash;
+        vp.src = 'http://gateway.ipfs.io/ipfs/' + this.videohash;
         // var elem = document.createElement("video");
         // var place = document.querySelector("#vidplace");
 
@@ -254,7 +254,7 @@
         vp.addEventListener('canplay', this.enableplay.bind(this));
 
         vp.addEventListener('progress', this._progress.bind(this));
-        console.log('stube-playser setting URL for video player to ',this.videourl);
+        console.log('stube-playser setting URL for video player to ',vp.src);
 
         
 
