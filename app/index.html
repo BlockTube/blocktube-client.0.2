@@ -90,7 +90,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       key="eth_node" 
       value="http://109.123.70.141:8545"></iron-meta>
 
-    <!-- Application name -->
+
+    <iron-media-query query="(min-width:0px) and (max-width: 600px)" query-matches="{{phoneview}}"></iron-media-query>
+    
+
     <excess-router-config
   path-style="hash"
   hash-prefix="#!"></excess-router-config>
@@ -101,84 +104,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <lazy-pages attr-for-selected="route" selected="{{mainmenu}}">
       <template is="dom-if" route="home">
-        <div>
-          <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
-
-
- <paper-scroll-header-panel main>
-
-          <!-- Main Toolbar -->
-          <paper-toolbar id="mainToolbar">
-
-            <h2>{{tab}}</h2>
-
-          </paper-toolbar>
-
-          <paper-toolbar id="secondToolbar">
-
-            <iron-selector id="tabselector" selected="{{tab}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
-              <paper-icon-button icon="home" go="home"></paper-icon-button>
-              <paper-icon-button icon="av:fiber-new" go="hot"></paper-icon-button>
-              <paper-icon-button icon="av:playlist-play" go="subs"></paper-icon-button>
-              <paper-icon-button icon="perm-identity" go="user"></paper-icon-button>
-            </iron-selector>
-            <!-- Toolbar icons --> </paper-toolbar>
-
-          <!-- Main Content -->
-          <div class="content">
-
-            <neon-animated-pages 
-            selected="{{tab}}" 
-            id="mainContainer"
-            attr-for-selected="tab-route" 
-            entry-animation="slide-from-right-animation" 
-            exit-animation="slide-left-animation"
-            >
-
-              <neon-animatable tab-route="home">
-
-                <div class="vertical center-center layout">
-                <template is="dom-repeat" items="{{clips}}">
-                  <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
-                </template>
-              </div>
-
-              </neon-animatable>
-              <neon-animatable tab-route="hot">
-                <h1>HOME</h1>
-                <p>Content lorem ipsum sit dolor et amet</p>
-                <p>Content lorem ipsum sit dolor et amet</p>
-                <p>Content lorem ipsum sit dolor et amet</p>
-
-                <p>Content lorem ipsum sit dolor et amet</p>
-                <p>Content lorem ipsum sit dolor et amet</p>
-                <p>Content lorem ipsum sit dolor et amet</p>
-                <p>Content lorem ipsum sit dolor et amet</p>
-
-              </neon-animatable>
-              <neon-animatable tab-route="subs">
-                <paper-material>
-                  <h1>Watch later list</h1>
-                  <p>Content lorem ipsum sit dolor et amet</p>
-                  <p>Content lorem ipsum sit dolor et amet</p>
-                  <p>Content lorem ipsum sit dolor et amet</p>
-
-                  <p>Content lorem ipsum sit dolor et amet</p>
-                  <p>Content lorem ipsum sit dolor et amet</p>
-                  <p>Content lorem ipsum sit dolor et amet</p>
-                  <p>Content lorem ipsum sit dolor et amet</p>
-                </paper-material>
-              </neon-animatable>
-              <neon-animatable tab-route="user">
-                <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload>
-              </neon-animatable>
-            </neon-animated-pages>
-
+      <paper-drawer-panel main force-narrow right-drawer drawer-width="300px">
+      <div drawer class="drawer">
+        <img paper-drawer-toggle class="avatarbig" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
+       <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload> 
+      </div>
+      <div main>
+        <div class="toolbar">
+          <div class="btlogo">
+          <template is="dom-if" if="{{!phoneview}}"></template>
+            <img src="images/bt-logo3.svg">
           </div>
-        </paper-scroll-header-panel>
-
-         
+            <img paper-drawer-toggle class="avatar" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
         </div>
+        <div class="pagecontainer">
+        <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
+          <template is="dom-repeat" items="{{clips}}">
+            <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
+          </template>
+          </div>
+          </div>
+          </paper-drawer-panel>
+
       </template>
 
       <template is="dom-if" route="clip" restamp>

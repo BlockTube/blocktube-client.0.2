@@ -76,6 +76,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       console.log('transition to ',destination);
       Excess.RouteManager.transitionTo(destination);
     }
+  };
+
+  app.phoneview = function(){
+    var phone = true;  
+    console.log('***** //////  Iz it? ', phone);
   }
 
 })(document);

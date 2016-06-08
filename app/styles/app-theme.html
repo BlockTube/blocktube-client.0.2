@@ -49,43 +49,101 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     --bt-orange:#F26728;
 
     --bt-font: {
-      font-family: 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      font-weight: 50;
+        font-family: 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 50;
     };
     @apply(--bt-font);
+
   }
 
-  /* General styles */
+
+
   body {
     background-color: var(--bt-blue);
   }
-/*  
-  lazy-pages {
-    height: 100%;
-  }
 
-  paper-scroll-header-panel {
-    height: 100%;
-  }
 
-  neon-animated-pages {
-    margin-top: 48px;
-  }*/
 
-  paper-material {
+
+
+
+ /* paper-material {
     border-radius: 2px;
     height: 100%;
     padding: 16px 0 16px 0;
     width: calc(98.66% - 16px);
     margin: 16px auto;
     background: white;
-  }
+  }*/
 
-  paper-menu iron-icon {
+/*  paper-menu iron-icon {
     margin-right: 33px;
     opacity: 0.54;
+  }*/
+
+
+  .pagecontainer {
+    @apply(--layout-vertical);
+    @apply(--layout-start);
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
   }
+
+  blockt-listitem {
+    width: 95vw;
+    max-width: 700px;
+  }
+
+  .drawer {
+    background-color: var(--bt-blue);
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+    box-sizing: border-box;
+    padding: 50px;
+  }
+
+
+  .avatar {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    }
+
+  .avatarbig {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    }
+
+
+  .toolbar {
+     background-color: #0C0C1A;
+     width: 100%;
+     box-sizing: border-box;
+    padding: 5vw;
+    padding: 30px;
+     @apply(--layout-horizontal);
+     @apply(--layout-center);
+
+     @apply(--layout-end-justified);
+}
+
+
+   .btlogo {
+     @apply(--layout-vertical);
+    margin-right: 20px;
+   }
+
+
+  .btlogo img {
+    width: 60vw;
+    max-width: 215px;
+  }
+/*
+
 
   .paper-menu > .iron-selected {
     color: var(--default-primary-color);
@@ -111,9 +169,93 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     line-height: 24px;
     min-height: 48px;
     padding: 0 16px;
-  }
+  }*/
 
   
+/*  #mainToolbar {
+    height: 48px;
+    width: 100%;
+    min-width: 360px;
+    background-color: var(--bt-orange);
+    @apply(--layout-horizontal);
+    @apply(--layout-center-center);
+  }
+
+  #secondToolbar {
+    height: 52px;
+    background-color: var(--bt-orange);
+    @apply(--layout-horizontal);
+    @apply(--layout-center-center);
+  }*/
+
+  .content {
+    background-color: var(--bt-lightblue);
+  }
+
+  #tabselector {
+    min-width: 360px;
+  }
+
+ .flex {
+  @apply(--layout-flex);
+ }
+  iron-selector {
+/*    @apply(--layout-horizontal);
+    @apply(--layout-around-justified);*/
+    width: 100%;
+  }
+
+
+
+
+
+  lazy-pages
+     {
+      padding: 48px 62px;
+      height: 100vh;
+      overflow-y: scroll;
+    }
+
+ /* paper-icon-button.iron-selected {
+    border-bottom: 3px solid white;
+  }
+
+  paper-input {
+    --paper-input-container-color: var(--bt-blue);
+  }
+
+  paper-button {
+      background: green;
+      color: yellow;
+    }
+
+    paper-button:hover {
+      background: lime;
+    }
+
+    paper-button[disabled],
+    paper-button[toggles][active] {
+      background: red;
+    }
+*/
+  /* Height of the scroll area */
+/*  .content {
+  }
+*/
+/*  #cliptab {
+    background-color: white;
+  }*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -121,7 +263,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   /* Small */
   @media (max-width: 600px) {
-
+  .pagecontainer {
+    @apply(--layout-center);
+  }
     paper-material {
       --menu-container-display: none;
       width: calc(97.33% - 32px);
@@ -161,11 +305,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     #drawer.paper-drawer-panel > [drawer] {
       border-right: 1px solid rgba(0, 0, 0, 0.14);
     }
-lazy-pages
-     {
-      padding: 48px 62px;
-      height: 100%;
-    }
+
 
   }
 
