@@ -61,11 +61,15 @@ width: 100%;
       #duration {
         background-color: black;
         color: white;
-        height: 18px;
+        height: 20px;
         font-weight: bold;
-        padding:5px;
-        position: absolute;
-        top:220px;
+        padding:5px 10px 5px 12px;
+        position: relative;
+        top: 190px;
+        max-width: 60px;
+        text-align: right;
+        @apply(--horizontal-layout);
+        @apply(--horizontal-center);
        }
 
       img {
@@ -83,7 +87,7 @@ width: 100%;
     on-iron-localstorage-load-empty="itemcacheloadedempty">
     </iron-localstorage>
  <div class="thumbnail" id="thumb" style="background: url({{thumbnail}}) no-repeat center; background-size: cover;">
- <div id="duration">01:31</div>
+ <div id="duration">00:04:31</div>
       </div>
     <paper-material>
      
