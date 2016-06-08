@@ -98,39 +98,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
       <lazy-pages attr-for-selected="data-route" selected="{{route}}">
 
-      <div data-route="home" class="fit">
-
-      <!-- Main Area -->
-      <paper-scroll-header-panel main>
-
-        <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar">
-
-          <h2>{{tab}}</h2>
-<!-- 
-          <div class="flex"></div> -->
-
-          <!-- Toolbar icons -->
-<!--           <paper-icon-button icon="hardware:cast"></paper-icon-button>
- -->       <!--    <paper-icon-button icon="search"></paper-icon-button>
-          <paper-icon-button icon="more-vert"></paper-icon-button> -->
-
-        </paper-toolbar>
-
-        <paper-toolbar id="secondToolbar">
-
-          <iron-selector id="tabselector" selected="{{tab}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
-            <paper-icon-button icon="home" go="home"></paper-icon-button>
-            <paper-icon-button icon="av:fiber-new" go="hot"></paper-icon-button>
-            <paper-icon-button icon="av:playlist-play" go="subs"></paper-icon-button>
-            <paper-icon-button icon="perm-identity" go="user"></paper-icon-button>
-          </iron-selector>
-          <!-- Toolbar icons -->
-        </paper-toolbar>
-
-        <!-- Main Content -->
-        <div class="content">
-
+      <div data-route="home">
+        <div class="content" main>
           <neon-animated-pages 
             selected="{{tab}}" 
             id="mainContainer"
@@ -180,7 +149,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         </div>
-      </paper-scroll-header-panel>
     </div>
 
       <div data-route="clip" id="cliptab">
