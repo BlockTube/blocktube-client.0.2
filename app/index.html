@@ -72,66 +72,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       host="http://109.123.70.141:8545" 
       host2="{{host}}"  
       balance="{{balance}}" 
-      account="{{account}}">
-    </web3-wallet>
+      account="{{account}}"></web3-wallet>
 
     <iron-meta 
       key="blocktube_contract" 
-      value="0xC4946E241ab66cDa428581cF2624f8cc6E4a7B72">
-    </iron-meta>
-    
+      value="0xC4946E241ab66cDa428581cF2624f8cc6E4a7B72"></iron-meta>
+
     <iron-meta 
       key="ipfs_read" 
-      value="gateway.ipfs.io">
-    </iron-meta>
-    
+      value="gateway.ipfs.io"></iron-meta>
+
     <iron-meta 
       key="ipfs_upload" 
-      value="/ip4/109.123.70.141/tcp/5001">
-    </iron-meta>
+      value="/ip4/109.123.70.141/tcp/5001"></iron-meta>
 
     <iron-meta 
       key="eth_node" 
-      value="http://109.123.70.141:8545">
-    </iron-meta>
+      value="http://109.123.70.141:8545"></iron-meta>
 
-    <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
-      <lazy-pages attr-for-selected="data-route" selected="{{route}}">
+    <!-- Application name -->
+    <excess-router-config
+  path-style="hash"
+  hash-prefix="#!"></excess-router-config>
 
-      <div data-route="home" class="fit">
+    <excess-route route="/:menu/(.*)?" menu="{{mainmenu}}"></excess-route>
+    <excess-route route="/home/:tabmenu" tabmenu="{{tab}}"></excess-route>
+    <excess-route route="/clip/:clipid" clipid="{{clipid}}"></excess-route>
 
-      <!-- Main Area -->
-      <paper-scroll-header-panel main>
+    <lazy-pages attr-for-selected="route" selected="{{mainmenu}}">
+      <template is="dom-if" route="home">
+        <div>
+          <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
 
-        <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar">
 
-          <h2>{{tab}}</h2>
-<!-- 
-          <div class="flex"></div> -->
+ <paper-scroll-header-panel main>
 
-          <!-- Toolbar icons -->
-<!--           <paper-icon-button icon="hardware:cast"></paper-icon-button>
- -->       <!--    <paper-icon-button icon="search"></paper-icon-button>
-          <paper-icon-button icon="more-vert"></paper-icon-button> -->
+          <!-- Main Toolbar -->
+          <paper-toolbar id="mainToolbar">
 
-        </paper-toolbar>
+            <h2>{{tab}}</h2>
 
-        <paper-toolbar id="secondToolbar">
+          </paper-toolbar>
 
-          <iron-selector id="tabselector" selected="{{tab}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
-            <paper-icon-button icon="home" go="home"></paper-icon-button>
-            <paper-icon-button icon="av:fiber-new" go="hot"></paper-icon-button>
-            <paper-icon-button icon="av:playlist-play" go="subs"></paper-icon-button>
-            <paper-icon-button icon="perm-identity" go="user"></paper-icon-button>
-          </iron-selector>
-          <!-- Toolbar icons -->
-        </paper-toolbar>
+          <paper-toolbar id="secondToolbar">
 
-        <!-- Main Content -->
-        <div class="content">
+            <iron-selector id="tabselector" selected="{{tab}}" attr-for-selected="go" on-iron-select="scrollPageToTop">
+              <paper-icon-button icon="home" go="home"></paper-icon-button>
+              <paper-icon-button icon="av:fiber-new" go="hot"></paper-icon-button>
+              <paper-icon-button icon="av:playlist-play" go="subs"></paper-icon-button>
+              <paper-icon-button icon="perm-identity" go="user"></paper-icon-button>
+            </iron-selector>
+            <!-- Toolbar icons --> </paper-toolbar>
 
-          <neon-animated-pages 
+          <!-- Main Content -->
+          <div class="content">
+
+            <neon-animated-pages 
             selected="{{tab}}" 
             id="mainContainer"
             attr-for-selected="tab-route" 
@@ -140,6 +136,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             >
 
               <neon-animatable tab-route="home">
+
                 <div class="vertical center-center layout">
                 <template is="dom-repeat" items="{{clips}}">
                   <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
@@ -157,7 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <p>Content lorem ipsum sit dolor et amet</p>
                 <p>Content lorem ipsum sit dolor et amet</p>
                 <p>Content lorem ipsum sit dolor et amet</p>
-                
+
               </neon-animatable>
               <neon-animatable tab-route="subs">
                 <paper-material>
@@ -173,21 +170,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-material>
               </neon-animatable>
               <neon-animatable tab-route="user">
-                 <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload>
+                <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload>
               </neon-animatable>
-          </neon-animated-pages>
+            </neon-animated-pages>
 
-
-
-        </div>
-      </paper-scroll-header-panel>
-    </div>
-
-      <div data-route="clip" id="cliptab">
-            <stube-item on-close="close" contract="{{params.clipcontract}}" web3="{{web3}}" account="{{account}}"></stube-item>
           </div>
+        </paper-scroll-header-panel>
 
-        </lazy-pages>
+         
+        </div>
+      </template>
+
+      <template is="dom-if" route="clip" restamp>
+        <stube-item on-close="to" data-args="/home/home" contract="{{clipid}}" web3="{{web3}}" account="{{account}}"></stube-item>
+      </template>
+    </lazy-pages>
 
   </template>
 
