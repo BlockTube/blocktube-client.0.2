@@ -15,48 +15,67 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
 
-  app.displayInstalledToast = function() {
-    // Check to make sure caching is actually enabled—it won't be in the dev environment.
-    if (!document.querySelector('platinum-sw-cache').disabled) {
-      document.querySelector('#caching-complete').show();
-    }
-  };
+  // app.displayInstalledToast = function() {
+  //   // Check to make sure caching is actually enabled—it won't be in the dev environment.
+  //   if (!document.querySelector('platinum-sw-cache').disabled) {
+  //     document.querySelector('#caching-complete').show();
+  //   }
+  // };
 
-  // Listen for template bound event to know when bindings
-  // have resolved and content has been stamped to the page
-  app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');
-    app.tab = 'home';
-    app.route = 'home';
-  });
+  // // Listen for template bound event to know when bindings
+  // // have resolved and content has been stamped to the page
+  // app.addEventListener('dom-change', function() {
+  //   console.log('Our app is ready to rock!');
+  //   app.tab = 'home';
+  //   app.route = 'home';
+  // });
 
   // See https://github.com/Polymer/polymer/issues/1381
-  window.addEventListener('WebComponentsReady', function() {
+ window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
+    if (window.location.hash === ''){
+      Excess.RouteManager.transitionTo('/home/home');
+    }
+
+
+    app.host = new Polymer.IronMetaQuery({
+      key: 'eth_node'
+    }).value;
+
   });
 
-  // Main area's paper-scroll-header-panel custom condensing transformation of
-  // the appName in the middle-container and the bottom title in the bottom-container.
-  // The appName is moved to top and shrunk on condensing. The bottom sub title
-  // is shrunk to nothing on condensing.
-  addEventListener('paper-header-transform', function(e) {
+
+
+  // // Main area's paper-scroll-header-panel custom condensing transformation of
+  // // the appName in the middle-container and the bottom title in the bottom-container.
+  // // The appName is moved to top and shrunk on condensing. The bottom sub title
+  // // is shrunk to nothing on condensing.
+  // addEventListener('paper-header-transform', function(e) {
     
-  });
+  // });
 
   
-  // Scroll page to top and expand header
+  // // Scroll page to top and expand header
   app.scrollPageToTop = function() {
-    document.getElementById('mainContainer').scrollTop = 0;
+    //document.getElementById('mainContainer').scrollTop = 0;
   };
 
   app.gotoClip = function(e) {
     console.log(e.detail);
-    //Excess.RouteManager.transitionTo('/clip/' + e.detail);
-    page('/clip/'+e.detail);
+    Excess.RouteManager.transitionTo('/clip/' + e.detail);
+    //page('/clip/'+e.detail);
   };
 
-  app.close = function(){
-    page('/');
-  };
+  // app.close = function(){
+  //   page('/');
+  // };
+
+  app.to = function(e){
+    var destination = e.target.getAttribute('data-args');
+    if (destination){      
+      console.log('transition to ',destination);
+      Excess.RouteManager.transitionTo(destination);
+    }
+  }
 
 })(document);
