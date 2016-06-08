@@ -20,9 +20,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
         background-color: white;
-        margin-top: 18px;
-        min-width: 300px;
-        max-width: 796px;
+        margin-bottom: 18px;
+/*        min-width: 300px;
+*/       /* max-width: 796px;*/
+width: 100%;
       }
 
       h1, h2, h3, h4 {
@@ -54,8 +55,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .thumbnail {
-        height: 180px;
+        height: 220px;
       }
+
+      #duration {
+        background-color: black;
+        color: white;
+        height: 20px;
+        font-weight: bold;
+        padding:5px 10px 5px 12px;
+        position: relative;
+        top: 190px;
+        max-width: 60px;
+        text-align: right;
+        @apply(--horizontal-layout);
+        @apply(--horizontal-center);
+       }
 
       img {
         
@@ -72,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-iron-localstorage-load-empty="itemcacheloadedempty">
     </iron-localstorage>
  <div class="thumbnail" id="thumb" style="background: url({{thumbnail}}) no-repeat center; background-size: cover;">
-        
+ <div id="duration">00:04:31</div>
       </div>
     <paper-material>
      

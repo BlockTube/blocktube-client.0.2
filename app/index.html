@@ -136,11 +136,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             >
 
               <neon-animatable tab-route="home">
-                <div class="horizontal center-center layout wrap">
-                  <template is="dom-repeat" items="{{clips}}">
-                    <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
-                  </template>
-                </div>
+
+                <div class="vertical center-center layout">
+                <template is="dom-repeat" items="{{clips}}">
+                  <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
+                </template>
+              </div>
 
               </neon-animatable>
               <neon-animatable tab-route="hot">
@@ -157,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </neon-animatable>
               <neon-animatable tab-route="subs">
                 <paper-material>
-                  <h1>HOME</h1>
+                  <h1>Watch later list</h1>
                   <p>Content lorem ipsum sit dolor et amet</p>
                   <p>Content lorem ipsum sit dolor et amet</p>
                   <p>Content lorem ipsum sit dolor et amet</p>
