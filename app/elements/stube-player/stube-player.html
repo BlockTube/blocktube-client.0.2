@@ -39,9 +39,15 @@
           max-height: 300px;
         }
 
+        paper-slider {
+          --paper-slider-active-color: var(--bt-orange);
+          --paper-slider-secondary-color: var(--bt-orange);
+          --paper-slider-knob-color: var(--bt-orange);
+        }
+
     </style>
     <div class="vertical layout" onmouseover="showOverlay()" onmouseout="countdownOverlay()">
-    <video id="vp" autoplay>
+    <video id="vp">
       <source src="{{videourl}}" />
 <!--       <track src="/images/scrubs.srt" kind="subtitle" srclang="en-US" label="English" />
  -->    </video>
@@ -146,7 +152,7 @@
         },
         volume: {
           type: Number,
-          value: 40,
+          value: 200,
           observer: '_volume'
         },
         scrubtime: {

@@ -118,6 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   #mainToolbar {
     height: 48px;
     width: 100%;
+    min-width: 360px;
     background-color: var(--bt-orange);
     @apply(--layout-horizontal);
     @apply(--layout-center-center);
@@ -135,9 +136,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   #tabselector {
-    width: 480px;
+    min-width: 360px;
   }
 
+ .flex {
+  @apply(--layout-flex);
+ }
   iron-selector {
     @apply(--layout-horizontal);
     @apply(--layout-around-justified);
