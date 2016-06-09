@@ -89,9 +89,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-meta 
       key="eth_node" 
       value="http://109.123.70.141:8545"></iron-meta>
-
-
-    <iron-media-query query="(min-width:0px) and (max-width: 600px)" query-matches="{{phoneview}}"></iron-media-query>
     
 
     <excess-router-config
@@ -109,22 +106,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <img paper-drawer-toggle class="avatarbig" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
        <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload> 
       </div>
-      <div main>
-        <div class="toolbar">
-          <div class="btlogo">
-          <template is="dom-if" if="{{!phoneview}}"></template>
-            <img src="images/bt-logo3.svg">
-          </div>
-            <img paper-drawer-toggle class="avatar" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
-        </div>
-        <div class="pagecontainer">
+      <div class="pagecontainer" main>
         <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
-          <template is="dom-repeat" items="{{clips}}">
-            <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem>
-          </template>
-          </div>
-          </div>
-          </paper-drawer-panel>
+
+        <div class="toolbar">
+        <blockt-logo></blockt-logo>
+          <img paper-drawer-toggle class="avatar" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
+        </div>
+<!--         <template is="dom-repeat" items="{{clips}}">
+          <blockt-listitem on-item-tapped="gotoClip" listitem id="{{item.address}}" contract="{{item.address}}" web3="{{web3}}" account="{{account}}"></blockt-listitem> -->
+        </template>
+      </div>
+      </paper-drawer-panel>
 
       </template>
 
