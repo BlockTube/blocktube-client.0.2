@@ -90,7 +90,7 @@
     var interval;
     var overlay;
 
-    showOverlay = function(){
+   var  showOverlay = function(){
       //console.log('hit it!', Date.now());
       overlayvisible = true;
       resttime = timeout;
@@ -98,7 +98,7 @@
       overlay.hidden = false;
     };
 
-    countdownOverlay = function(){
+    var countdownOverlay = function(){
       if(!interval){
       interval = setInterval(function(){
         resttime = resttime - 1;
@@ -106,10 +106,10 @@
           toggleVisibility();
         }
       }, 1000);
-    };
+    }
     };
 
-    toggleVisibility = function(){ 
+    var toggleVisibility = function(){ 
       clearInterval(interval);
       interval = null;
       if(overlayvisible){
