@@ -78,4 +78,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+  app.phoneview = function(){
+    var phone = true;  
+    console.log('***** //////  Iz it? ', phone);
+  }
+
 })(document);

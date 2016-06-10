@@ -19,28 +19,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-        background-color: white;
+        background-color: rgba(0,0,0,0.025);
         margin-bottom: 18px;
 /*        min-width: 300px;
 */       /* max-width: 796px;*/
-width: 100%;
+        width: 100%;
       }
 
-      h1, h2, h3, h4 {
+      :host:hover  {
+        background-color: rgba(0,0,0,0.075);
+        cursor: pointer;
+      }
+      :host:hover .title  {
+        text-decoration: underline;
+      }
+
+/*      h1, h2, h3, h4 {
         color: var(--bt-blue);
         text-transform: lowercase;
         @apply(--bt-font);
         margin-bottom: -10px;
+      }*/
+      .title {
+        @apply(--bt-font);
+        font-size: 24px;
+        color: var(--bt-blue);
+        margin: 0px;
+        box-sizing: border-box;
+        padding: 12px;
       }
+
+/*      .title:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+*/
 
       p {
         opacity: 0.8;
         font-size: 90%;
       }
 
-      .container {
+/*      .container {
         padding: 12px;
-      }
+      */}
     
       .flexchild {
         @apply(--layout-flex);
@@ -55,7 +77,7 @@ width: 100%;
       }
 
       .thumbnail {
-        height: 220px;
+        height: 290px;
       }
 
       #duration {
@@ -64,21 +86,37 @@ width: 100%;
         height: 20px;
         font-weight: bold;
         padding:5px 12px 5px 12px;
-        position: relative;
-        top: 190px;
+/*        position: relative;*/
+/*        top: 190px;*/
         max-width: 60px;
         text-align: right;
         @apply(--horizontal-layout);
         @apply(--horizontal-center);
        }
 
-      img {
-        
-      }
-
       .tags {
         color: var(--bt-lightblue);
       }
+
+
+
+      /* Small */
+    @media all and (min-width: 0) and (max-width: 400px) and (orientation: portrait) {    .thumbnail {
+          height: 210px;
+        }
+      }
+    @media all and (min-width: 401px) and (max-width: 700px) {
+        .thumbnail {
+          height: 320px;
+        }
+      }
+
+    @media all and (min-width: 701px) {
+        .thumbnail {
+          height: 400px;
+        }
+      }
+
     </style>
 
     <iron-localstorage id="lscache" name="itemcache"
@@ -86,19 +124,17 @@ width: 100%;
     on-iron-localstorage-load="itemcacheloaded"
     on-iron-localstorage-load-empty="itemcacheloadedempty">
     </iron-localstorage>
- <div class="thumbnail" id="thumb" style="background: url({{thumbnail}}) no-repeat center; background-size: cover;">
- <div id="duration">00:04:31</div>
-      </div>
-    <paper-material>
-     
-    
+    <div class="thumbnail" id="thumb" style="background: url({{thumbnail}}) no-repeat center; background-size: cover;">
+  
+    </div>
+           <!-- <div id="duration">00:04:31</div> -->
+
       <div class="container">
-        <h4>{{title}}</h4>
-        <p>{{description}}</p>
+        <h4 class="title">{{title}}</h4>
+<!--         <p>{{description}}</p> -->
         <small class="tags">{{tags}}</small>
       </div>
 
-    </paper-material>
 
 </template>
 

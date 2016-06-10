@@ -57,36 +57,93 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   }
 
-  /* General styles */
+
+
   body {
-    background-color: var(--bt-lightblue);
-  }
-  
-  lazy-pages {
-    height: 100%;
+    background-color: white;
   }
 
-  paper-scroll-header-panel {
-    height: 100%;
-  }
 
-  neon-animated-pages {
-    margin-top: 48px;
-  }
 
-  paper-material {
+
+
+
+ /* paper-material {
     border-radius: 2px;
     height: 100%;
     padding: 16px 0 16px 0;
     width: calc(98.66% - 16px);
     margin: 16px auto;
     background: white;
-  }
+  }*/
 
-  paper-menu iron-icon {
+/*  paper-menu iron-icon {
     margin-right: 33px;
     opacity: 0.54;
+  }*/
+
+
+  .pagecontainer {
+/*    @apply(--layout-horizontal);
+    @apply(--layout-wrap);*/
+    overflow-y: scroll;
+    width: 100%;
+/*    height: 100%;*/
   }
+
+  blockt-listitem {
+    width: 95vw;
+    max-width: 400px;
+  }
+
+  .drawer {
+    background-color: var(--bt-blue);
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+    box-sizing: border-box;
+    padding: 50px;
+  }
+
+
+  .avatar {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    }
+
+  .avatarbig {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    }
+
+
+  .toolbar {
+     background-color: #EFEFEF;
+     width: 100%;
+     box-sizing: border-box;
+    padding: 30px;
+     @apply(--layout-horizontal);
+     @apply(--layout-center);
+
+     @apply(--layout-end-justified);
+}
+
+
+/*   .btlogo {
+     @apply(--layout-vertical);
+    margin-right: 20px;
+   }
+*/
+
+/*  blockt-logo {
+    width: 50vw;
+    max-width: 185px;
+    margin-right: 15px;
+  }*/
+/*
+
 
   .paper-menu > .iron-selected {
     color: var(--default-primary-color);
@@ -112,10 +169,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     line-height: 24px;
     min-height: 48px;
     padding: 0 16px;
-  }
+  }*/
 
   
-  #mainToolbar {
+/*  #mainToolbar {
     height: 48px;
     width: 100%;
     min-width: 360px;
@@ -129,7 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     background-color: var(--bt-orange);
     @apply(--layout-horizontal);
     @apply(--layout-center-center);
-  }
+  }*/
 
   .content {
     background-color: var(--bt-lightblue);
@@ -143,12 +200,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   @apply(--layout-flex);
  }
   iron-selector {
-    @apply(--layout-horizontal);
-    @apply(--layout-around-justified);
+/*    @apply(--layout-horizontal);
+    @apply(--layout-around-justified);*/
     width: 100%;
   }
 
-  paper-icon-button.iron-selected {
+
+
+
+
+  lazy-pages
+     {
+      padding: 48px 62px;
+      min-height: 100vh;
+      overflow-y: scroll;
+    }
+
+ /* paper-icon-button.iron-selected {
     border-bottom: 3px solid white;
   }
 
@@ -169,20 +237,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     paper-button[toggles][active] {
       background: red;
     }
-
+*/
   /* Height of the scroll area */
-  .content {
+/*  .content {
   }
-
-  #cliptab {
+*/
+/*  #cliptab {
     background-color: white;
-  }
+  }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /* Breakpoints */
+    @media all and (min-width: 0) and (max-width: 400px) and (orientation: portrait) {    
+
+.pagecontainer {
+/*    @apply(--layout-vertical);
+    @apply(--layout-center);
+    @apply(--layout-start);*/
+
+  }
+
+
+      }
+
+
 
   /* Small */
   @media (max-width: 600px) {
-
+/*  .pagecontainer {
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+  }
     paper-material {
       --menu-container-display: none;
       width: calc(97.33% - 32px);
@@ -206,11 +303,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .bg {
       background: white;
     }
-
+*/
   }
 
   /* Tablet+ */
-  @media (min-width: 601px) {
+/*  @media (min-width: 601px) {
 
     paper-material {
       width: calc(98% - 46px);
@@ -222,13 +319,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     #drawer.paper-drawer-panel > [drawer] {
       border-right: 1px solid rgba(0, 0, 0, 0.14);
     }
-lazy-pages
-     {
-      padding: 48px 62px;
-      height: 100%;
-    }
 
-  }
+
+  }*/
 
   /* Material Design Adaptive Breakpoints */
   /*
