@@ -1,0 +1,88 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="blockt-prepaidmake">
+  <template>
+    <style is="custom-style" include="shared-styles"></style>
+
+      <div class="container">
+
+          <h3>Create invite code</h3>
+          <p>You are about to create an invite code. Tap the heart, fool !</p>
+          <img src="http://legendsrevealed.com/entertainment/wp-content/uploads/2015/05/ba-baracus.jpg">
+          <paper-icon-button toggles icon="favorite" on-tap="doMakeInvite"></paper-icon-button>
+          <template is="dom-if" if="{{invitecode}}">
+          Your invite code is: <paper-button raised on-tap="goClaim">{{invitecode}}</paper-button>
+          Click the button fool !
+          </template>
+
+      </div>  
+</template>
+
+<script>
+    (function() {
+      'use strict';
+      
+      Polymer({
+        is: 'blockt-prepaidmake',
+
+        properties: {
+          web3: {
+            type: Object,
+            observer: '_web3'
+          },
+        },
+
+        ready: function(){
+        },
+
+        close: function(){
+        },
+
+        _web3: function(){
+
+        },
+
+        doMakeInvite: function() {
+          console.log('MAKE INVITE');
+
+          var secretSeed = lightwallet.keystore.generateRandomSeed();
+
+          lightwallet.keystore.deriveKeyFromPassword('test', function(err, pwDerivedKey) {
+
+            var keystore = new lightwallet.keystore(secretSeed, pwDerivedKey);
+            keystore.generateNewAddress(pwDerivedKey, 1);
+
+            this.publickey = keystore.getAddresses()[0];
+            this.privatekey = keystore.exportPrivateKey(this.publickey, pwDerivedKey);
+
+            // TODO : transfer waarde van jouw eigen account naar dit adres
+
+            // TODO : maak pre-paid contract aan met deze account.
+            this.prepaidcontractaddress = "0x000000000";
+
+            this.invitecode = this.publickey + '-' + this.privatekey + '-' + this.prepaidcontractaddress;
+
+
+          }.bind(this));
+        },
+
+        goClaim: function(){
+          Excess.RouteManager.transitionTo('/claiminvite/'+this.invitecode);
+        }
+
+      });
+    })();
+  </script>
+
+</dom-module>

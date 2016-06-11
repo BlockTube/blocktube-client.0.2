@@ -98,13 +98,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <excess-route route="/:menu/(.*)?" menu="{{mainmenu}}"></excess-route>
     <excess-route route="/home/:tabmenu" tabmenu="{{tab}}"></excess-route>
     <excess-route route="/clip/:clipid" clipid="{{clipid}}"></excess-route>
+    <excess-route route="/claiminvite/:invitecode" invitecode="{{invitecode}}"></excess-route>
 
     <lazy-pages attr-for-selected="route" selected="{{mainmenu}}">
+
+      <template is="dom-if" route="claiminvite" restamp>
+        <blockt-prepaidclaim account="{{account}}" web3="{{web3}}" invitecode="{{invitecode}}"></blockt-prepaidclaim>
+      </template>
+
+      <template is="dom-if" route="makeinvite" restamp>
+        <blockt-prepaidmake web3="{{web3}}"></blockt-prepaidmake>
+      </template>
+
+
       <template is="dom-if" route="home">
       <paper-drawer-panel main force-narrow right-drawer drawer-width="300px">
       <div drawer class="drawer">
         <img paper-drawer-toggle class="avatarbig" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
-       <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload> 
+       <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload>
+      <paper-button raised on-tap="to" data-args="/makeinvite">Create an invite, fool!</paper-button>
+ 
       </div>
       <div class="pagecontainer" main>
         <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
