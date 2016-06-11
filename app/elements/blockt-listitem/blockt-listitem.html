@@ -20,49 +20,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
         background-color: rgba(0,0,0,0.025);
-        margin-bottom: 18px;
-/*        min-width: 300px;
-*/       /* max-width: 796px;*/
-        width: 100%;
+
+        /* This value changes in queries */
+        width: 224px;
+        margin: 0px 6px 26px 6px;
       }
 
-      :host:hover  {
-        background-color: rgba(0,0,0,0.075);
+      :host :hover {
         cursor: pointer;
       }
-      :host:hover .title  {
-        text-decoration: underline;
-      }
 
-/*      h1, h2, h3, h4 {
-        color: var(--bt-blue);
-        text-transform: lowercase;
-        @apply(--bt-font);
-        margin-bottom: -10px;
-      }*/
-      .title {
-        @apply(--bt-font);
-        font-size: 24px;
-        color: var(--bt-blue);
-        margin: 0px;
+      .container {
+        width: 100%;
         box-sizing: border-box;
         padding: 12px;
       }
 
-/*      .title:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
-*/
 
-      p {
+      .title {
+        width: 100%;
+        margin: 0px;
+      }
+
+      .title h4 {
+        @apply(--bt-font);
+        font-size: 14px;
+        color: var(--bt-blue);
+        margin: 0px;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;    
+      }
+
+      h5 {
+        @apply(--bt-font);
+        margin: 0px;
         opacity: 0.8;
         font-size: 90%;
       }
 
-/*      .container {
-        padding: 12px;
-      */}
     
       .flexchild {
         @apply(--layout-flex);
@@ -77,7 +74,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .thumbnail {
-        height: 290px;
+        width: 100%;
+
+        /* This value changes in queries */
+        height: 130px;
       }
 
       #duration {
@@ -95,27 +95,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        }
 
       .tags {
-        color: var(--bt-lightblue);
+        color: var(--bt-green);
+      }
+
+      .tags h5 {
+        font-size: 10px;
       }
 
 
+      /* THESE ARE ALL NON-STANDARD QUERIES FOR THE DIFFERENT VIDEO SIZES */
+      @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {    
+        :host {
+          width: 352px;
+          max-width: 100%;
 
-      /* Small */
-/*    @media all and (min-width: 0) and (max-width: 400px) and (orientation: portrait) {    .thumbnail {
-          height: 210px;
+          margin: 0px 0px 26px 0px;
+        }
+        .thumbnail {
+          height: 171px;
         }
       }
-    @media all and (min-width: 401px) and (max-width: 700px) {
-        .thumbnail {
-          height: 320px;
+/*      @media all and (min-width: 321) and (max-width: 360px) and (orientation: portrait) {    
+        :host {
+          width: 352px;
+          margin: 0px 0px 26px 0px;
         }
-      }
-
-    @media all and (min-width: 701px) {
         .thumbnail {
-          height: 400px;
+          height: 198px;
         }
       }*/
+      @media all and (min-width: 361px) and (max-width: 609px) and (orientation: portrait) {
+        :host {
+          width: 448px;
+          margin: 0px 0px 26px 0px;
+        }
+        .thumbnail {
+          height: 260px;
+        }
+      }
+
+      @media all and (min-width: 610px) and (max-width: 760px) and (orientation: portrait) {
+        :host {
+          width: 624px;
+          margin: 0px 0px 26px 0px;
+        }
+        .thumbnail {
+          height: 351px;
+        }
+
+      }
+
+      @media all and (min-width: 761px) {
+        :host {
+          width: 222px;
+          margin: 0px 6px 26px 6px;
+        }
+        .thumbnail {
+          height: 130px;
+        }
+
+      }
 
     </style>
 
@@ -124,15 +163,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-iron-localstorage-load="itemcacheloaded"
     on-iron-localstorage-load-empty="itemcacheloadedempty">
     </iron-localstorage>
-    <div class="thumbnail" id="thumb" style="background: url({{thumbnail}}) no-repeat center; background-size: cover;">
+    <div
+      class="thumbnail"
+      id="thumb"
+      style="background: url({{thumbnail}}) no-repeat center; background-size: cover;">
   
     </div>
            <!-- <div id="duration">00:04:31</div> -->
 
       <div class="container">
-        <h4 class="title">{{title}}</h4>
-<!--         <p>{{description}}</p> -->
-        <small class="tags">{{tags}}</small>
+        <div class="title">
+          <h4>{{title}}</h4>
+        </div>
+        <div class="tags">
+          <h5>{{tags}}</h5>
+        </div>
       </div>
 
 

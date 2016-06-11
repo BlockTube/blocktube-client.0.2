@@ -1,101 +1,53 @@
 <!--
 @license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+BlockTu.be (c) 2016 Mofooooo's
 -->
 
 <style is="custom-style">
 
-  /*
-   Polymer includes a shim for CSS Custom Properties that we can use for application theming.
-   Below, you'll find the default palette for the Polymer Starter Kit layout. Feel free to play
-   with changing the colors used or generate your own palette of colours at MaterialPalette.com.
-
-   See https://www.polymer-project.org/1.0/docs/devguide/styling.html#xscope-styling-details
-   for further information on custom CSS properties.
-   */
-
-  /* Application theme */
-
   :root {
-    --dark-primary-color: #303F9F;
-    --default-primary-color: #3F51B5;
-    --light-primary-color: #C5CAE9;
-    --text-primary-color: #ffffff; /*text/icons*/
-    --accent-color: #FF4081;
-    --primary-background-color: #c5cae9;
-    --primary-text-color: #212121;
-    --secondary-text-color: #727272;
-    --disabled-text-color: #bdbdbd;
-    --divider-color: #B6B6B6;
-
-    /* Components */
-
-    /* paper-drawer-panel */
-    --drawer-menu-color: #ffffff;
-    --drawer-border-color: 1px solid #ccc;
-    --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
-
-    /* paper-menu */
-    --paper-menu-background-color: #fff;
-    --menu-link-color: #111111;
-
     --bt-blue: #101022;
     --bt-lightblue:#63C3CD;
     --bt-orange:#F26728;
+    --bt-green:#39AA7C;
+    --bt-grey1:#EFEFEF;
+    --bt-grey2:#D1D1D1;
 
     --bt-font: {
-        font-family: 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        font-weight: 50;
+      font-family: 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 50;
     };
-    @apply(--bt-font);
-
   }
 
-
-
-  body {
-    background-color: white;
+  paper-drawer-panel {
+    width: 100%;
+  }
+  paper-scroll-header-panel {
+    width: 100%;
+  }
+  ::-webkit-scrollbar { 
+      display: none; 
   }
 
-
-
-
-
-
- /* paper-material {
-    border-radius: 2px;
-    height: 100%;
-    padding: 16px 0 16px 0;
-    width: calc(98.66% - 16px);
-    margin: 16px auto;
-    background: white;
-  }*/
-
-/*  paper-menu iron-icon {
-    margin-right: 33px;
-    opacity: 0.54;
-  }*/
-
+  .homecanvas {
+    width: 100%;
+    /* background-color: red; */
+    box-sizing: border-box;
+    padding: 4vw;
+    @apply(--layout-horizontal);
+    @apply(--layout-start);
+    @apply(--layout-center-justified);
+    @apply(--layout-wrap);
+  }
 
   .pagecontainer {
-/*    @apply(--layout-horizontal);
-    @apply(--layout-wrap);*/
-    overflow-y: scroll;
     width: 100%;
-/*    height: 100%;*/
   }
 
-  blockt-listitem {
-    width: 95vw;
-    max-width: 400px;
+  ::-webkit-scrollbar { 
+      display: none; 
   }
-
   .drawer {
     background-color: var(--bt-blue);
     @apply(--layout-vertical);
@@ -120,73 +72,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   .toolbar {
-     background-color: #EFEFEF;
-     width: 100%;
-     box-sizing: border-box;
-    padding: 30px;
-     @apply(--layout-horizontal);
-     @apply(--layout-center);
-
-     @apply(--layout-end-justified);
-}
-
-
-/*   .btlogo {
-     @apply(--layout-vertical);
-    margin-right: 20px;
-   }
-*/
-
-/*  blockt-logo {
-    width: 50vw;
-    max-width: 185px;
-    margin-right: 15px;
-  }*/
-/*
-
-
-  .paper-menu > .iron-selected {
-    color: var(--default-primary-color);
-  }
-
-  paper-menu a {
-    text-decoration: none;
-    color: var(--menu-link-color);
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -ms-flex-direction: row;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    font-family: 'Roboto', 'Noto', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-    min-height: 48px;
-    padding: 0 16px;
-  }*/
-
-  
-/*  #mainToolbar {
-    height: 48px;
+    background-color: var(--bt-grey1);
     width: 100%;
-    min-width: 360px;
-    background-color: var(--bt-orange);
+    box-sizing: border-box;
+    padding: 20px;
     @apply(--layout-horizontal);
-    @apply(--layout-center-center);
+    @apply(--layout-center);
+    @apply(--layout-end-justified);
   }
 
-  #secondToolbar {
-    height: 52px;
-    background-color: var(--bt-orange);
-    @apply(--layout-horizontal);
-    @apply(--layout-center-center);
-  }*/
+  .valueofvideo {
+    @apply(--bt-font);
+    font-style: bold;
+    color:rgba(0,0,0,0.25);
+    margin-left: 6px; 
+  }
+
 
   .content {
     background-color: var(--bt-lightblue);
@@ -200,8 +101,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   @apply(--layout-flex);
  }
   iron-selector {
-/*    @apply(--layout-horizontal);
-    @apply(--layout-around-justified);*/
     width: 100%;
   }
 
@@ -211,41 +110,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   lazy-pages
      {
-      padding: 48px 62px;
       min-height: 100vh;
-      overflow-y: scroll;
     }
-
- /* paper-icon-button.iron-selected {
-    border-bottom: 3px solid white;
-  }
-
-  paper-input {
-    --paper-input-container-color: var(--bt-blue);
-  }
-
-  paper-button {
-      background: green;
-      color: yellow;
-    }
-
-    paper-button:hover {
-      background: lime;
-    }
-
-    paper-button[disabled],
-    paper-button[toggles][active] {
-      background: red;
-    }
-*/
-  /* Height of the scroll area */
-/*  .content {
-  }
-*/
-/*  #cliptab {
-    background-color: white;
-  }*/
-
 
 
 
