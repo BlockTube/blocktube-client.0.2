@@ -41,6 +41,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Object,
             observer: '_web3'
           },
+          account: {
+            type: String
+          }
         },
 
         ready: function(){
@@ -66,16 +69,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.publickey = keystore.getAddresses()[0];
             this.privatekey = keystore.exportPrivateKey(this.publickey, pwDerivedKey);
 
-            // TODO : transfer waarde van jouw eigen account naar dit adres
-
-            // TODO : maak pre-paid contract aan met deze account.
-            this.prepaidcontractaddress = "0x000000000";
-
-            this.invitecode = this.publickey + '-' + this.privatekey + '-' + this.prepaidcontractaddress;
+            // create the pre-paid contract
+            this._createContract();
 
 
           }.bind(this));
         },
+
+ fixaddress: function(address) {
+        function strStartsWith(str, prefix) {
+          return str.indexOf(prefix) === 0;
+        }
+
+        if (!strStartsWith(address, '0x')) {
+          return ('0x' + address);
+        }
+        return address;
+      },
+
+    _createContract: function(hash, fn) {
+      var self = this;
+      this.contracturl = this.resolveUrl('../../contracts/BlockTubePrepaid.json');
+      this.importHref(this.contracturl, function(e) {
+
+        var contractjson = JSON.parse(e.target.import.body.innerText);
+
+
+        var blocktubeprepaidContract = this.web3.eth.contract(contractjson.abi);
+        var blocktubeprepaid = blocktubeprepaidContract.new({
+          from: this.fixaddress(this.account),
+          data: contractjson.bytecode,
+          gas: 3000000,
+          value: this.web3.toWei('0.1', 'ether')
+        }, function(e, contract) {
+          console.log(e, contract);
+          if (typeof contract.address !== 'undefined') {
+            console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+
+            this.prepaidcontractaddress = contract.address;
+            this.invitecode = this.publickey + '-' + this.privatekey + '-' + this.prepaidcontractaddress            
+          }
+        }.bind(this));
+
+      }, function(e) {
+        console.log('ERROR!', e);
+      });
+
+    },
+
 
         goClaim: function(){
           Excess.RouteManager.transitionTo('/claiminvite/'+this.invitecode);
