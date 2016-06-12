@@ -22,6 +22,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <p>You are about to create an invite code. Tap the heart, fool !</p>
           <img src="http://legendsrevealed.com/entertainment/wp-content/uploads/2015/05/ba-baracus.jpg">
           <paper-icon-button toggles icon="favorite" on-tap="doMakeInvite"></paper-icon-button>
+          <template is="dom-if" if="{{_is(status,0)}}">
+          Status is 0
+          </template>
+          <template is="dom-if" if="{{!_is(status,0)}}">
+          Status is {{status}}
+          </template>
           <template is="dom-if" if="{{invitecode}}">
           Your invite code is: <paper-button raised on-tap="goClaim">{{invitecode}}</paper-button>
           Click the button fool !
@@ -44,20 +50,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           account: {
             type: String
+          },
+          status: {
+            type: Number
           }
         },
 
-        ready: function() {},
+        ready: function() {
+                    this.status = 0;
+
+        },
 
         close: function() {},
 
         _web3: function() {
 
         },
+        
+        _is: function(a, b) {
+          if (b === undefined){
+            b = true;
+          }
+          return a === b;
+        },
 
         doMakeInvite: function() {
           console.log('MAKE INVITE');
           
+          this.status = 1;
 
           var secretSeed = lightwallet.keystore.generateRandomSeed();
 
@@ -107,8 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.web3.eth.getGasPrice(function(err, result) {
             var gasPrice = result.toNumber(10);
 
- console.log('balance of your account is now',this.web3.eth.getBalance(this.fixaddress(this.account)).toNumber());
-
+            console.log('balance of your account is now',this.web3.eth.getBalance(this.fixaddress(this.account)).toNumber());
 
             this.web3.eth.sendTransaction({
               from: this.fixaddress(this.account),
@@ -125,15 +144,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               }
 
               console.log('txhash=', result);
+              this.status = 2;
 
               this.waitTx(result, function(success) {
                 if (!success){
                   console.log('waitTX failed');
                 }else{
                   console.log('mined TXhash', result);
+                  this.status = 3;
                 }
                 cb(success);
-              })
+              }.bind(this))
 
 
             }.bind(this));
@@ -206,6 +227,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 console.log(e, contract);
                 if (typeof contract.address !== 'undefined') {
                   console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+                  this.status = 4;
 
                   this.prepaidcontractaddress = contract.address;
                   this.invitecode = this.publickey + '-' + this.privatekey + '-' + this.prepaidcontractaddress
