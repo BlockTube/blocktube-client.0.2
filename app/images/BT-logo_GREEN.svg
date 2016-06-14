@@ -8,6 +8,7 @@
 	.st2{fill:#39AA7C;}
 	.st3{fill:none;}
 	.st4{enable-background:new    ;}
+	.st5{opacity:0.6;fill:#39AA7C;}
 </style>
 <rect x="-3419.3" y="-2096.6" class="st0" width="2849.4" height="3815.2"/>
 <rect x="-3419.3" y="-2096.6" class="st1" width="2849.4" height="386.3"/>
@@ -62,10 +63,13 @@
 </g>
 <rect x="1456" y="-1134.5" class="st3" width="1519.4" height="147.7"/>
 <text transform="matrix(1 0 0 1 1456.0193 -1000.896)" style="font-family:'Montserrat-ExtraBold'; font-size:180px;">BlockTube</text>
-<rect class="st2" width="300" height="300"/>
+<rect x="-80" y="-160" class="st2" width="460" height="460"/>
 <polygon class="st0" points="143.1,194.8 183.2,194.8 163.2,165 "/>
 <path class="st0" d="M98.6,99.8c22.2,0,36.4,9.4,36.4,23.9c0,9.6-6.2,17.6-16.1,20.4c11.6,2.4,19.1,11.9,19.1,23.9
 	c0,16.3-14.6,26.5-37.3,26.5H52.1V99.8H98.6z M80.1,137.1h17c5.5,0,9.1-3.2,9.1-8.3c0-4.9-3.5-7.9-9.1-7.9h-17V137.1z M80.1,173.7
 	h17c7.1,0,11.6-3.5,11.6-9.1c0-5.1-4.5-8.4-11.6-8.4h-17V173.7z"/>
 <path class="st0" d="M231.6,122.3v72.4h-28.3v-72.4h-27.5V99.8h83.3v22.5H231.6z"/>
+<rect x="677.2" y="-124.7" class="st2" width="160" height="90"/>
+<rect x="944.2" y="-90.2" class="st2" width="160" height="90"/>
+<rect x="1253.2" y="-364.7" class="st5" width="320" height="180"/>
 </svg>
