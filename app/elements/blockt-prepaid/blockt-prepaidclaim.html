@@ -18,11 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="container">
 
           <h3>Claim invite code</h3>
-          <img src="http://images6.fanpop.com/image/photos/37300000/B-A-Baracus-the-a-team-37384715-500-333.jpg">
-          <p>You are about to get on this plane :</p>
-          <p>{{invitecode}}</p>
-          <p>to {{account}}</p>
-
+         
           <paper-icon-button toggles icon="favorite" on-tap="doClaimInvite"></paper-icon-button>
 
       </div>  
@@ -49,6 +45,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         ready: function(){
+
+
+          // lightwallet.importPrivateKey = function(privatekey) {
+
+          //   //if (hdPathString === undefined) {
+          //   hdPathString = this.defaultHdPathString;
+          //   //}
+
+          //   // if (this.ksData[hdPathString].info.purpose !== 'sign') {
+          //   //   throw new Error('KeyStore.generateNewAddress: Address not defined when purpose is not "sign"');
+          //   // }
+
+          //   if (!this.encSeed) {
+          //     throw new Error('KeyStore.generateNewAddress: No seed set');
+          //   }
+          //   //  n = n || 1;
+          //   //  var keys = this._generatePrivKeys(pwDerivedKey, n, hdPathString);
+
+
+          //   var privkeyBuf = privatekey.toBuffer();
+
+          //   var privkeyHex = privkeyBuf.toString('hex');
+
+          //   var encPrivKey = KeyStore._encryptKey(privkeyHex, pwDerivedKey);
+          //   var keyObj = {
+          //     privKey: privkeyHex,
+          //     encPrivKey: encPrivKey
+          //   }
+
+
+          //   var address = KeyStore._computeAddressFromPrivKey(keyObj.privKey);
+          //   this.ksData[hdPathString].encPrivKeys[address] = keyObj.encPrivKey;
+          //   this.ksData[hdPathString].addresses.push(address);
+          // };
+
+
         },
 
         close: function(){
@@ -58,16 +90,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         },
 
-        doClaimInvite: function(){
+        doClaimInvite: function() {
           console.log('CLAIM INVITE');
           var parts = this.invitecode.split('-');
-          this.publickey = parts[0];
-          this.privatekey = parts[1];
-          this.prepaidcontractaddress = parts[2];
 
-          console.log('TODO: call claim() from contract',this.prepaidcontractaddress);
-          console.log('using keypair ',this.publickey,this.privatekey);
-          console.log('recepient of funds =>',this.account);
+          this.privatekey = parts[0];
+          this.prepaidcontractaddress = parts[1];
+
+          console.log('TODO: call claim() from contract', this.prepaidcontractaddress);
+          console.log('using keypair ', this.publickey, this.privatekey);
+          console.log('recepient of funds =>', this.account);
+
+          console.log('calculated pubkey', lightwallet.keystore._computeAddressFromPrivKey(this.privatekey));
+
+          debugger;
+          var secretSeed = lightwallet.keystore.generateRandomSeed();
+
+          lightwallet.keystore.deriveKeyFromPassword('test', function(err, pwDerivedKey) {
+
+            var keystore = new lightwallet.keystore(secretSeed, pwDerivedKey);
+
+            //lightwallet.keystore.importPrivateKey(this.privatekey);
+
+          });
 
 
         },
