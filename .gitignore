@@ -1,5 +1,5 @@
 node_modules
+app/elements/contracts/*.json
 dist
 bower_components
 .tmp
-BlockTubePrepaid.json
