@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../stube-likebtn/stube-likebtn.html">
 <link rel="import" href="../stube-player/stube-player.html">
+<link rel="import" href="../blockt-tipjar/blockt-tipjar.html">
 
 <dom-module id="stube-item">
   <template>
@@ -88,6 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="actionbuttons">
             <paper-icon-button toggles icon="favorite" active="{{likebutton}}"></paper-icon-button>
             <stube-likebtn account="{{account}}" web3="{{web3}}"></stube-likebtn>
+            <blockt-tipjar clipcontract="{{contract}}" account="{{account}}" web3="{{web3}}"></blockt-tipjar>
             <p class="paper-font-body2 gris">{{likes}}</p>
           </div>
 

@@ -1,0 +1,108 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="blockt-tipjar">
+  <template>
+    <style is="custom-style" include="shared-styles"></style>
+    <paper-button on-tap="doTip" raised>Tip this clip</paper-button>{{progress}}
+</template>
+
+<script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'blockt-tipjar',
+
+        properties: {
+          web3: {
+            type: Object,
+            observer: '_dataReady'
+          },
+          clipcontract: {
+            type: String,
+          }
+        },
+
+        ready: function() {},
+
+        attached: function() {
+          this.blocktube_contract = new Polymer.IronMetaQuery({
+            key: 'blocktube_contract'
+          }).value;
+        },
+
+        close: function() {},
+
+        _dataReady: function() {         
+
+        },
+
+        doTip: function() {
+          console.log('Tip the mofo');
+
+          var self = this;
+          this.contracturl = this.resolveUrl('../../contracts/blocktube.json');
+          this.importHref(this.contracturl, function(e) {
+
+            this.progress = 'start-tip';
+
+            self.contractjson = JSON.parse(e.target.import.body.innerText);
+
+            //console.log('Creating new contract on account ', self.account);
+
+            this.web3.eth.getGasPrice(function(err, result) {
+              var gasPrice = result.toNumber(10);
+
+              var MyContract = self.web3.eth.contract(self.contractjson.abi);
+
+              var myContractInstance = MyContract.at(self.blocktube_contract);
+
+              result = myContractInstance.like.sendTransaction(self.clipcontract, 1,{
+                  from: app.helpers.fixaddress(self.account),
+                  gasPrice: gasPrice,
+                  gasLimit: 3000000,
+                  gas: 2000000,
+                  data: self.contractjson.bytecode
+                },
+                function(err, result) {
+                  if (err !== null) {
+                    console.log(err);
+                    console.log('ERROR: Transaction didnt go through. See console.');
+                    //cb(err);
+                  } else {
+                    console.log('Transaction Successful!');
+                    //this.progress = 'addedtoindex';
+                    console.log('Tx hash=', result);
+                     self.progress = 'done-tip';
+                    // set vote status to TxHash received 
+                    //self.transactionHash = result;
+
+                    //cb(null, result);
+
+                  }
+                }.bind(this));
+
+            });
+
+          }, function(e) {
+            console.log('ERROR!', e);
+          });
+
+        }
+
+      });
+    })();
+  </script>
+
+</dom-module>
