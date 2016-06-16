@@ -8,7 +8,7 @@
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "visionmedia/page.js#~1.6.3",
-    "web3-wallet": "~0.0.2",
+    "web3-wallet": "https://github.com/BlockTube/web3-wallet.git#^0.0.8",
     "ipfs-upload": "^0.0.13",
     "excess-router": "^0.9.14",
     "iron-meta": "^1.1.1",
