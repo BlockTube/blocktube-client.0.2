@@ -14,7 +14,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="blockt-tipjar">
   <template>
     <style is="custom-style" include="shared-styles"></style>
-    <paper-button on-tap="doTip" raised>Tip this clip</paper-button>{{progress}}
+<template is="dom-if" if="{{_is(progress,'')}}">
+    <paper-button on-tap="doTip" raised>Tip this clip</paper-button>
+  </template>
+<template is="dom-if" if="{{_is(progress,'start-tip')}}">
+start tip
+</template>
+<template is="dom-if" if="{{_is(progress,'done-tip')}}">
+done tip
+</template>
+
 </template>
 
 <script>
@@ -31,10 +40,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           clipcontract: {
             type: String,
-          }
+          },
+          // helpers: {
+          //   type: Object,
+          //   //value: app.helpers
+          // }
         },
 
-        ready: function() {},
+        ready: function() {
+this.progress = '';
+
+        },
+
+         _is: function(a, b) {
+        if (b === undefined){
+          b = true;
+        }
+        return a === b;
+      },
 
         attached: function() {
           this.blocktube_contract = new Polymer.IronMetaQuery({
@@ -58,9 +81,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.progress = 'start-tip';
 
             self.contractjson = JSON.parse(e.target.import.body.innerText);
-
-            //console.log('Creating new contract on account ', self.account);
-
             this.web3.eth.getGasPrice(function(err, result) {
               var gasPrice = result.toNumber(10);
 
@@ -82,14 +102,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     //cb(err);
                   } else {
                     console.log('Transaction Successful!');
-                    //this.progress = 'addedtoindex';
                     console.log('Tx hash=', result);
-                     self.progress = 'done-tip';
-                    // set vote status to TxHash received 
-                    //self.transactionHash = result;
-
-                    //cb(null, result);
-
+                    self.progress = 'done-tip';
                   }
                 }.bind(this));
 

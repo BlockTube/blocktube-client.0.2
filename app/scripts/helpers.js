@@ -3,8 +3,7 @@
 
 	var app = document.querySelector('#app');
 
-	function Helpers() {
-	}
+	function Helpers() {}
 
 	Helpers.prototype.fixaddress = function(address) {
 		function strStartsWith(str, prefix) {
@@ -14,6 +13,13 @@
 			return ('0x' + address);
 		}
 		return address;
+	};
+
+	Helpers.prototype.is = function(a, b) {
+		if (b === undefined) {
+			b = true;
+		}
+		return a === b;
 	};
 
 	app.helpers = new Helpers();
