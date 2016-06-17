@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../stube-likebtn/stube-likebtn.html">
-
+<link rel="import" href="../blockt-tipjar/blockt-tipjar.html">
 
 <dom-module id="stube-clip">
   <template>
@@ -35,6 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="paper-font-headline flex">{{title}}</div>
       <paper-icon-button toggles icon="favorite" active="{{likebutton}}"></paper-icon-button>
       <stube-likebtn address="{{address}}" clipaddr="{{ipfsobject}}"></stube-likebtn>
+      <blockt-tipjar clipadr="{{ipfsobject}}"></blockt-tipjar>TJ
       <p class="paper-font-body2 gris">{{likes}}</p>
     </div>
       <div class="paper-font-body2 gris"><span>{{username}}</span> - <span>{{views}}</span> views</div>

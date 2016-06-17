@@ -90,24 +90,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.privatekey = keystore.exportPrivateKey(this.publickey, pwDerivedKey);
 
 
-            var web3Provider = new HookedWeb3Provider({
-              host: new Polymer.IronMetaQuery({
-                key: 'eth_node'
-              }).value,
-              transaction_signer: keystore
-            });
+            // var web3Provider = new HookedWeb3Provider({
+            //   host: new Polymer.IronMetaQuery({
+            //     key: 'eth_node'
+            //   }).value,
+            //   transaction_signer: keystore
+            // });
 
-            var web3 = new Web3();
-            web3.setProvider(web3Provider);
+            // var newweb3 = new Web3();
+            // newweb3.setProvider(web3Provider);
 
-            keystore.passwordProvider = function(callback) {
-              callback(null, 'test');
-            };
+            // keystore.passwordProvider = function(callback) {
+            //   callback(null, 'test');
+            // };
 
             this._sendvalue(3 * 300000 + 0.1 * 1e18, function() {
               // create the pre-paid contract
-              this._createContract(web3);
             }.bind(this));
+
+            this._createContract();
+
 
           }.bind(this));
         },
@@ -199,21 +201,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }.bind(this));
         },
 
-        _createContract: function(newweb3) {
+        _createContract: function() {
           var self = this;
           this.contracturl = this.resolveUrl('../../contracts/BlockTubePrepaid.json');
           this.importHref(this.contracturl, function(e) {
 
             var contractjson = JSON.parse(e.target.import.body.innerText);
 
-            newweb3.eth.getGasPrice(function(err, result) {
+            this.web3.eth.getGasPrice(function(err, result) {
               var gasPrice = result.toNumber(10);
 
-              console.log('balance of prepay account is now',newweb3.eth.getBalance(this.fixaddress(this.publickey)).toNumber());
+              console.log('balance of prepay account is now',this.web3.eth.getBalance(this.fixaddress(this.publickey)).toNumber());
 
-              var blocktubeprepaidContract = newweb3.eth.contract(contractjson.abi);
+              var blocktubeprepaidContract = this.web3.eth.contract(contractjson.abi);
               var blocktubeprepaid = blocktubeprepaidContract.new({
-                from: this.fixaddress(this.publickey),
+                from: this.fixaddress(this.account),
                 data: contractjson.bytecode,
                 gas: 3000000,
                 gasPrice: gasPrice,
@@ -230,7 +232,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   this.status = 4;
 
                   this.prepaidcontractaddress = contract.address;
-                  this.invitecode = this.publickey + '-' + this.privatekey + '-' + this.prepaidcontractaddress
+                  this.invitecode = this.privatekey + '-' + this.prepaidcontractaddress
                 }
               }.bind(this));
             }.bind(this));
