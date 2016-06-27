@@ -112,22 +112,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       <template is="dom-if" route="home">
-      <paper-drawer-panel main force-narrow right-drawer drawer-width="300px">
-      <div drawer class="drawer">
+      <!-- <paper-drawer-panel main force-narrow right-drawer drawer-width="300px"> -->
+<!--       <div drawer class="drawer">
         <img class="avatarbig" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
        <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload>
       <paper-button raised on-tap="to" data-args="/makeinvite">Create an invite, fool!</paper-button>
  
-      </div>
-
-      <paper-scroll-header-panel class="pagecontainer" main>
+      </div> -->
+      <div main>
+      <paper-scroll-header-panel class="pagecontainer">
         <blockt-index clips="{{clips}}" web3="{{web3}}"></blockt-index>
-        <div class="paper-header toolbar">
+        <paper-toolbar class="paper-header toolbar">
           <!-- <p class="valueofvideo">The value of video</p> -->
           <span class="flex"></span>
           <blockt-logo></blockt-logo>
           <img paper-drawer-toggle class="avatar" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy.jpg">
-        </div>
+        </paper-toolbar>
         
         <div class="homecanvas">
           <template is="dom-repeat" items="{{clips}}">
@@ -135,8 +135,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
         </div>
       </paper-scroll-header-panel>
-
-      </paper-drawer-panel>
+      </div>
+      <!-- </paper-drawer-panel> -->
 
       </template>
 
